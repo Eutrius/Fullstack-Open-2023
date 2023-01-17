@@ -13,7 +13,7 @@ sequenceDiagram
     server-->>browser: https://studies.cs.helsinki.fi/exampleapp/notes
     deactivate server
 
-    Note right of server: The server responds with status code 302 asking the browser to send a new GET request to the link included in the response headers
+    Note right of browser: The server responds with status code 302 asking the browser to send a new GET request to the link included in the response headers
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
     activate server
