@@ -3,6 +3,13 @@ sequenceDiagram
     participant browser
     participant server
 
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    browser-->>server: [{"note": "New Note"}]
+    activate server
+    server->>browser: Status code 302 Redirect
+    server-->>browser: https://studies.cs.helsinki.fi/exampleapp/notes
+    deactivate server
+
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
     activate server
     server-->>browser: HTML document
