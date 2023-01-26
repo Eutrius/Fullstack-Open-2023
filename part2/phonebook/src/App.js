@@ -7,10 +7,22 @@ const App = () => {
   const handleInputChange = (e) => {
     setNewName(e.target.value);
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setPersons(persons.concat({ name: newName }));
-    setNewName("");
+    if (!checkForDuplicate(newName)) {
+      setPersons(persons.concat({ name: newName }));
+      setNewName("");
+    }
+  };
+  const checkForDuplicate = (name) => {
+    for (let { name } of persons) {
+      if (name === newName) {
+        alert(`${newName} is already added to phonebook`);
+        return true;
+      }
+    }
+    return false;
   };
 
   return (
