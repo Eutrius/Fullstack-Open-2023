@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Filter from "./components/Filter";
 import Persons from "./components/Persons";
 import PersonForm from "./components/PersonForm";
-import axios from "axios";
+import server from "./services/persons";
 
 const initialInputs = {
   newName: "",
@@ -20,9 +20,9 @@ const App = () => {
   );
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then((response) => {
-      setPersons(response.data);
-    });
+    server //break
+      .getAll()
+      .then((response) => setPersons(response));
   }, []);
 
   const handleInputChange = (e) => {
@@ -38,12 +38,12 @@ const App = () => {
         number: newNumber,
         id: persons.length + 1,
       };
-      axios
-        .post("http://localhost:3001/persons", newPerson)
+      server //break
+        .create(newPerson)
         .then((response) => {
-          setPersons(persons.concat(response.data));
+          setPersons(persons.concat(response));
+          setInputs({ ...inputs, newName: "", newNumber: "" });
         });
-      setInputs({ ...inputs, newName: "", newNumber: "" });
     } else {
       alert(`${newName} is already added to phonebook`);
     }
@@ -57,7 +57,7 @@ const App = () => {
       <PersonForm
         onChange={handleInputChange}
         onSubmit={handleSubmit}
-        values={(newName, newNumber)}
+        values={{ newName, newNumber }}
       />
       <h3>Numbers</h3>
       <Persons persons={filteredPersons} />
