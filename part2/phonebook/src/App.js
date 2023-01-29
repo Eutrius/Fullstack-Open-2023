@@ -33,13 +33,16 @@ const App = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (persons.every(({ name }) => name !== newName)) {
-      setPersons(
-        persons.concat({
-          name: newName,
-          number: newNumber,
-          id: persons.length + 1,
-        })
-      );
+      const newPerson = {
+        name: newName,
+        number: newNumber,
+        id: persons.length + 1,
+      };
+      axios
+        .post("http://localhost:3001/persons", newPerson)
+        .then((response) => {
+          setPersons(persons.concat(response.data));
+        });
       setInputs({ ...inputs, newName: "", newNumber: "" });
     } else {
       alert(`${newName} is already added to phonebook`);
