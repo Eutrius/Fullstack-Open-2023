@@ -14,5 +14,11 @@ const createPerson = async (newObject) => {
 const deletePerson = async (id) => {
   return axios.delete(`${baseUrl}/${id}`);
 };
-const server = { getAllPersons, createPerson, deletePerson };
+
+const updatePerson = async (id, newObject) => {
+  const request = axios.put(`${baseUrl}/${id}`, newObject);
+  return request.then((response) => response.data);
+};
+
+const server = { getAllPersons, createPerson, deletePerson, updatePerson };
 export default server;

@@ -49,7 +49,24 @@ const App = () => {
           console.log(err);
         });
     } else {
-      alert(`${newName} is already added to phonebook`);
+      if (
+        window.confirm(
+          `${newName} is already added to phonebook, replace the old number with a new one?`
+        )
+      ) {
+        const targetPerson = persons.filter(({ name }) => name === newName)[0];
+        const changedPerson = { ...targetPerson, number: newNumber };
+        server
+          .updatePerson(targetPerson.id, changedPerson)
+          .then((response) => {
+            setPersons(
+              persons.map((person) =>
+                person.id !== changedPerson.id ? person : response
+              )
+            );
+          })
+          .catch((err) => console.log(err));
+      }
     }
   };
 
