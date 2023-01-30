@@ -20,9 +20,10 @@ const App = () => {
   );
 
   useEffect(() => {
-    server //break
-      .getAll()
-      .then((response) => setPersons(response));
+    server //
+      .getAllPersons()
+      .then((response) => setPersons(response))
+      .catch((err) => console.log(err));
   }, []);
 
   const handleInputChange = (e) => {
@@ -36,17 +37,38 @@ const App = () => {
       const newPerson = {
         name: newName,
         number: newNumber,
-        id: persons.length + 1,
+        id: generateId(),
       };
-      server //break
-        .create(newPerson)
+      server //
+        .createPerson(newPerson)
         .then((response) => {
           setPersons(persons.concat(response));
           setInputs({ ...inputs, newName: "", newNumber: "" });
+        })
+        .catch((err) => {
+          console.log(err);
         });
     } else {
       alert(`${newName} is already added to phonebook`);
     }
+  };
+
+  const handleDelete = (id, name) => {
+    if (window.confirm(`Delete ${name}?`)) {
+      server //
+        .deletePerson(id)
+        .catch((err) => console.log(err));
+      setPersons(persons.filter((person) => person.id !== id));
+    }
+  };
+
+  const generateId = () => {
+    for (let i = 1; i <= persons.length; i++) {
+      if (persons.every(({ id }) => id !== i)) {
+        return i;
+      }
+    }
+    return persons.length + 1;
   };
 
   return (
@@ -60,7 +82,14 @@ const App = () => {
         values={{ newName, newNumber }}
       />
       <h3>Numbers</h3>
-      <Persons persons={filteredPersons} />
+      {filteredPersons.map(({ name, number, id }) => (
+        <Persons
+          key={id}
+          name={name}
+          number={number}
+          onClick={() => handleDelete(id, name)}
+        />
+      ))}
     </div>
   );
 };
