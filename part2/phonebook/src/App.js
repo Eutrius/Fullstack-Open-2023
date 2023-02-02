@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Filter from "./components/Filter";
 import Persons from "./components/Persons";
 import PersonForm from "./components/PersonForm";
+import Notification from "./components/Notification";
 import server from "./services/persons";
 
 const initialInputs = {
@@ -13,6 +14,10 @@ const initialInputs = {
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [inputs, setInputs] = useState(initialInputs);
+  const [notification, setNotification] = useState({
+    message: null,
+    type: "error",
+  });
   const { newName, newNumber, filter } = inputs;
 
   const filteredPersons = persons.filter(({ name }) =>
@@ -43,6 +48,7 @@ const App = () => {
         .createPerson(newPerson)
         .then((response) => {
           setPersons(persons.concat(response));
+          showNotification(`Added ${response.name}`, "success");
           setInputs({ ...inputs, newName: "", newNumber: "" });
         })
         .catch((err) => {
@@ -64,6 +70,10 @@ const App = () => {
                 person.id !== changedPerson.id ? person : response
               )
             );
+            showNotification(
+              `${response.name}'s number is changed to ${response.number}`,
+              "success"
+            );
           })
           .catch((err) => console.log(err));
       }
@@ -74,8 +84,11 @@ const App = () => {
     if (window.confirm(`Delete ${name}?`)) {
       server //
         .deletePerson(id)
+        .then(() => {
+          showNotification(`Deleted ${name}`, "success");
+          setPersons(persons.filter((person) => person.id !== id));
+        })
         .catch((err) => console.log(err));
-      setPersons(persons.filter((person) => person.id !== id));
     }
   };
 
@@ -88,9 +101,17 @@ const App = () => {
     return persons.length + 1;
   };
 
+  const showNotification = (message, type) => {
+    setNotification({ message: message, type: type });
+    setTimeout(() => {
+      setNotification({ ...notification, message: null });
+    }, 5000);
+  };
+
   return (
     <div>
       <h3>Phonebook</h3>
+      <Notification message={notification.message} type={notification.type} />
       <Filter onChange={handleInputChange} value={filter} />
       <h3>add a new</h3>
       <PersonForm
