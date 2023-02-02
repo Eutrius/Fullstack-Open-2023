@@ -52,7 +52,7 @@ const App = () => {
           setInputs({ ...inputs, newName: "", newNumber: "" });
         })
         .catch((err) => {
-          console.log(err);
+          showNotification(err.message, "error");
         });
     } else {
       if (
@@ -75,7 +75,12 @@ const App = () => {
               "success"
             );
           })
-          .catch((err) => console.log(err));
+          .catch(() => {
+            showNotification(
+              `Information of ${targetPerson.name} has already been removed from the server`,
+              "error"
+            );
+          });
       }
     }
   };
@@ -88,7 +93,7 @@ const App = () => {
           showNotification(`Deleted ${name}`, "success");
           setPersons(persons.filter((person) => person.id !== id));
         })
-        .catch((err) => console.log(err));
+        .catch((err) => showNotification(err.message, "error"));
     }
   };
 
