@@ -1,7 +1,7 @@
 import React from "react";
 import Country from "./Country";
 
-const Countries = ({ countries }) => {
+const Countries = ({ countries, onShowButtonClick }) => {
   if (countries.length === 0) return null;
   if (countries.length === 1)
     return (
@@ -18,8 +18,18 @@ const Countries = ({ countries }) => {
   }
   return (
     <>
-      {countries.map((country) => (
-        <p>{country.name.common}</p>
+      {countries.map(({ name }, index) => (
+        <div key={index}>
+          {name.common}{" "}
+          <button
+            type="button"
+            onClick={() => {
+              onShowButtonClick(name.common);
+            }}
+          >
+            show
+          </button>
+        </div>
       ))}
     </>
   );

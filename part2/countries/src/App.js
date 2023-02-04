@@ -16,20 +16,31 @@ const App = () => {
     setQuery(e.target.value);
   };
 
-  const countriesToShow = () => {
+  const handleShowButtonClick = (name) => {
+    setQuery(name);
+  };
+
+  const getFilteredCountries = () => {
     if (query === "") return [];
-    return countries.filter((country) => {
+    let exactMatch = null;
+    const filteredCountries = countries.filter((country) => {
       const name = country.name.common.toLowerCase();
+      if (name === query.toLowerCase()) {
+        exactMatch = [country];
+      }
       return name.includes(query);
     });
+    return exactMatch || filteredCountries;
   };
-  console.log(countriesToShow());
 
   return (
     <div>
       find countries
       <input onChange={handleInputChange} value={query} />
-      <Countries countries={countriesToShow()} />
+      <Countries
+        countries={getFilteredCountries()}
+        onShowButtonClick={handleShowButtonClick}
+      />
     </div>
   );
 };

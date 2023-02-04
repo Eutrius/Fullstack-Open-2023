@@ -9,8 +9,8 @@ const Country = ({ country }) => {
       <p>area {area}</p>
       <h4>languanges:</h4>
       <ul>
-        {Object.values(languages).map((languange) => {
-          return <li>{languange}</li>;
+        {Object.values(languages).map((languange, index) => {
+          return <li key={index}>{languange}</li>;
         })}
       </ul>
       <img src={flags.png} alt={flags.alt} />
