@@ -1,7 +1,9 @@
 import React from "react";
+import WeatherReport from "./WeatherReport";
 
 const Country = ({ country }) => {
   const { name, capital, flags, area, languages } = country;
+
   return (
     <div>
       <h1>{name.common}</h1>
@@ -14,6 +16,7 @@ const Country = ({ country }) => {
         })}
       </ul>
       <img src={flags.png} alt={flags.alt} />
+      <WeatherReport city={capital} />{" "}
     </div>
   );
 };

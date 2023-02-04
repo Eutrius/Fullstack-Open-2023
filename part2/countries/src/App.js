@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Server from "./services/countries";
+import countriesApi from "./services/countriesApi";
 import Countries from "./components/Countries";
 
 const App = () => {
@@ -7,7 +7,7 @@ const App = () => {
   const [countries, setCountries] = useState([]);
 
   useEffect(() => {
-    Server.getAll().then((response) => {
+    countriesApi.getAll().then((response) => {
       setCountries(response);
     });
   }, []);

@@ -6,5 +6,5 @@ const getAll = async () => {
   return request.then((response) => response.data);
 };
 
-const Server = { getAll: getAll };
-export default Server;
+const countriesApi = { getAll: getAll };
+export default countriesApi;
