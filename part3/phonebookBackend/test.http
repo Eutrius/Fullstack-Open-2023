@@ -6,6 +6,34 @@ POST http://localhost:3001/api/persons
 content-type: application/json
 
 {
-    "name" : "Anonymous",
+    "name": "Anonymous",
+    "number": "51029831029"
+}
+
+###
+
+POST http://localhost:3001/api/persons
+content-type: application/json
+
+{
+    "number": "51029831029"
+}
+
+###
+
+POST http://localhost:3001/api/persons
+content-type: application/json
+
+{
+    "name": "Anonymous"
+}
+
+###
+
+POST http://localhost:3001/api/persons
+content-type: application/json
+
+{
+    "name": "Arto hellas",
     "number": "51029831029"
 }

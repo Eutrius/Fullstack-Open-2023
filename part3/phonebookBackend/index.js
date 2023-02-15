@@ -60,6 +60,17 @@ app.delete("/api/persons/:id", (request, response) => {
 app.post("/api/persons", (request, response) => {
   const body = request.body;
 
+  if (!body.name || !body.number) {
+    return response.status(400).json({
+      error: "missing name or number",
+    });
+  }
+
+  if (checkPersonsNames(body.name)) {
+    return response.status(400).json({
+      error: "name must be unique",
+    });
+  }
   const person = {
     id: generateId(),
     name: body.name,
@@ -78,4 +89,10 @@ app.listen(PORT, () => {
 const generateId = () => {
   const maxId = 1000000;
   return Math.floor(Math.random() * maxId);
+};
+
+const checkPersonsNames = (name) => {
+  return persons
+    .map((person) => person.name.toLowerCase())
+    .includes(name.toLowerCase());
 };
