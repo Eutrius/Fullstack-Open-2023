@@ -6,6 +6,6 @@ POST http://localhost:3001/api/persons
 content-type: application/json
 
 {
-    "name" : "Anne Mayrielle",
+    "name" : "Anonymous",
     "number": "51029831029"
 }
