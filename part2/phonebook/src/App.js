@@ -42,7 +42,6 @@ const App = () => {
       const newPerson = {
         name: newName,
         number: newNumber,
-        id: generateId(),
       };
       server //
         .createPerson(newPerson)
@@ -95,15 +94,6 @@ const App = () => {
         })
         .catch((err) => showNotification(err.message, "error"));
     }
-  };
-
-  const generateId = () => {
-    for (let i = 1; i <= persons.length; i++) {
-      if (persons.every(({ id }) => id !== i)) {
-        return i;
-      }
-    }
-    return persons.length + 1;
   };
 
   const showNotification = (message, type) => {
