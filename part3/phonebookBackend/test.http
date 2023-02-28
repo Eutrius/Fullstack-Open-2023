@@ -1,4 +1,4 @@
-DELETE http://localhost:3001/api/persons/1
+DELETE http://localhost:3001/api/persons/63fe531cebb33fed86f6bf83
 
 ###
 
@@ -37,3 +37,5 @@ content-type: application/json
     "name": "Arto hellas",
     "number": "51029831029"
 }
+
+GET http://localhost:3001/api/1

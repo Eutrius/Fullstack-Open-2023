@@ -48,6 +48,11 @@ let persons = [
   },
 ];
 
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message);
+  next(error);
+};
+
 app.get("/api/persons", (request, response) => {
   Person.find({}).then((person) => {
     response.json(person);
@@ -105,6 +110,8 @@ app.post("/api/persons", (request, response) => {
     response.json(result);
   });
 });
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
