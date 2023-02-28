@@ -93,14 +93,15 @@ app.post("/api/persons", (request, response) => {
       error: "name must be unique",
     });
   }
-  const person = {
-    id: generateId(),
+  const person = new Person({
     name: body.name,
     number: body.number,
-  };
+  });
 
-  persons = persons.concat(person);
-  response.json(person);
+  person.save().then((result) => {
+    console.log(`added ${result.name} number ${result.number} to phonebook`);
+    response.json(result);
+  });
 });
 
 const PORT = process.env.PORT;
