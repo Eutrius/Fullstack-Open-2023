@@ -22,7 +22,17 @@ const personSchema = new mongoose.Schema({
     minLength: 3,
     required: true,
   },
-  number: String,
+  number: {
+    type: String,
+    validate: {
+      validator: function (number) {
+        return /^(?!\d{2}-\d{5}$)\d{2,3}-\d{5,}$/.test(number);
+      },
+      message:
+        "Phone number must be 8 or more digits, the first 2 or 3 digits must be separated by '-' (eg. 09-105902)",
+    },
+    required: true,
+  },
 });
 
 personSchema.set("toJSON", {

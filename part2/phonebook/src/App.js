@@ -50,8 +50,8 @@ const App = () => {
           showNotification(`Added ${response.name}`, "success");
           setInputs({ ...inputs, newName: "", newNumber: "" });
         })
-        .catch((err) => {
-          showNotification(err.response.data.error, "error");
+        .catch((error) => {
+          showNotification(error.response.data.error, "error");
         });
     } else {
       if (
@@ -74,11 +74,8 @@ const App = () => {
               "success"
             );
           })
-          .catch(() => {
-            showNotification(
-              `Information of ${targetPerson.name} has already been removed from the server`,
-              "error"
-            );
+          .catch((error) => {
+            showNotification(error.response.data.error, "error");
           });
       }
     }
@@ -92,7 +89,7 @@ const App = () => {
           showNotification(`Deleted ${name}`, "success");
           setPersons(persons.filter((person) => person.id !== id));
         })
-        .catch((err) => showNotification(err.message, "error"));
+        .catch((error) => showNotification(error.message, "error"));
     }
   };
 
