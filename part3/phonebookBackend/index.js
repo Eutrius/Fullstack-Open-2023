@@ -30,6 +30,8 @@ const errorHandler = (error, request, response, next) => {
 
   if (error.name === "CastError") {
     return response.status(400).send({ error: "invalid id format" });
+  } else if (error.name === "ValidationError") {
+    return response.status(400).json({ error: error.message });
   }
   next(error);
 };
@@ -73,24 +75,23 @@ app.delete("/api/persons/:id", (request, response) => {
     .catch((error) => console.log(error));
 });
 
-app.post("/api/persons", (request, response) => {
+app.post("/api/persons", (request, response, next) => {
   const body = request.body;
-
-  if (!body.name || !body.number) {
-    return response.status(400).json({
-      error: "missing name or number",
-    });
-  }
 
   const person = new Person({
     name: body.name,
     number: body.number,
   });
 
-  person.save().then((result) => {
-    console.log(`added ${result.name} number ${result.number} to phonebook`);
-    response.json(result);
-  });
+  person
+    .save()
+    .then((result) => {
+      console.log(`added ${result.name} number ${result.number} to phonebook`);
+      response.json(result);
+    })
+    .catch((error) => {
+      next(error);
+    });
 });
 
 app.put("/api/persons/:id", (request, response, next) => {

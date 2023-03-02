@@ -51,7 +51,7 @@ const App = () => {
           setInputs({ ...inputs, newName: "", newNumber: "" });
         })
         .catch((err) => {
-          showNotification(err.message, "error");
+          showNotification(err.response.data.error, "error");
         });
     } else {
       if (
