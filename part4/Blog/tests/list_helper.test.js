@@ -1,6 +1,6 @@
 const listHelper = require("../utils/list_helper");
-const blogsForTest = require("../utils/blogsForTest");
-const listWithOneBlog = [blogsForTest[0]];
+const listOfBlogs = require("../utils/blogsForTest");
+const listWithOneBlog = [listOfBlogs[0]];
 
 describe("dummy", () => {
   test("dummy returns one", () => {
@@ -24,7 +24,7 @@ describe("total likes", () => {
 
   test("of a bigger list is calculated right", () => {
     const expectedLikes = 36;
-    expect(listHelper.totalLikes(blogsForTest)).toBe(expectedLikes);
+    expect(listHelper.totalLikes(listOfBlogs)).toBe(expectedLikes);
   });
 });
 
@@ -40,7 +40,23 @@ describe("favorite blog", () => {
   });
 
   test("of a bigger list is the blog with the most likes", () => {
-    const expectedBlog = blogsForTest[2];
-    expect(listHelper.favoriteBlog(blogsForTest)).toEqual(expectedBlog);
+    const expectedBlog = listOfBlogs[2];
+    expect(listHelper.favoriteBlog(listOfBlogs)).toEqual(expectedBlog);
+  });
+});
+
+describe("most blogs", () => {
+  test("of empty list is an empty object", () => {
+    expect(listHelper.mostBlogs([])).toEqual({});
+  });
+
+  test("of a list with a single blog is the author of that blog", () => {
+    const expectedResult = { author: "Michael Chan", blogs: 1 };
+    expect(listHelper.mostBlogs(listWithOneBlog)).toEqual(expectedResult);
+  });
+
+  test("of a list with multiple blogs", () => {
+    const expectedResult = { author: "Robert C. Martin", blogs: 3 };
+    expect(listHelper.mostBlogs(listOfBlogs)).toEqual(expectedResult);
   });
 });
