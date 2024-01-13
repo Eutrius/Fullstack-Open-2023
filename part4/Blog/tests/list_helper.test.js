@@ -18,7 +18,7 @@ describe("total likes", () => {
 
   test("when list has only one blog equals the likes of that", () => {
     expect(listHelper.totalLikes(listWithOneBlog)).toBe(
-      listWithOneBlog[0].likes
+      listWithOneBlog[0].likes,
     );
   });
 
@@ -35,7 +35,7 @@ describe("favorite blog", () => {
 
   test("when list has only on blog equals that blog", () => {
     expect(listHelper.favoriteBlog(listWithOneBlog)).toEqual(
-      listWithOneBlog[0]
+      listWithOneBlog[0],
     );
   });
 
