@@ -57,6 +57,24 @@ describe("HTTP POST", () => {
 
     expect(titlesAfter).toContain("Create A Fullstack Website");
   });
+
+  test("a blog can be created without likes property", async () => {
+    const newBlog = {
+      title: "Create A Fullstack Website",
+      author: "Fullstack Open",
+      url: "https://fullstackopen.com",
+    };
+
+    await api
+      .post("/api/blogs")
+      .send(newBlog)
+      .expect(201)
+      .expect("Content-Type", /application\/json/);
+
+    const blogsAfter = await api.get("/api/blogs");
+    const newBlogInDb = blogsAfter.body[blogsAfter.body.length - 1];
+    expect(newBlogInDb.likes).toBe(0);
+  });
 });
 
 afterAll(async () => {
