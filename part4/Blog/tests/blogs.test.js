@@ -75,6 +75,28 @@ describe("HTTP POST", () => {
     const newBlogInDb = blogsAfter.body[blogsAfter.body.length - 1];
     expect(newBlogInDb.likes).toBe(0);
   });
+
+  test("a blog without title or url return 400 bad request", async () => {
+    const newBlogWithoutTitle = {
+      author: "Fullstack Open",
+      url: "https://fullstackopen.com",
+      likes: 99,
+    };
+    await api.post("/api/blogs").send(newBlogWithoutTitle).expect(400);
+
+    const newBlogWithoutUrl = {
+      title: "Create A Fullstack Website",
+      author: "Fullstack Open",
+      likes: 99,
+    };
+    await api.post("/api/blogs").send(newBlogWithoutUrl).expect(400);
+
+    const newBlogWithoutBoth = {
+      author: "Fullstack Open",
+      likes: 99,
+    };
+    await api.post("/api/blogs").send(newBlogWithoutBoth).expect(400);
+  });
 });
 
 afterAll(async () => {
