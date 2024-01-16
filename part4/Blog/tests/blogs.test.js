@@ -6,6 +6,11 @@ const blogsForTest = require("../utils/blogsForTest.js");
 
 const api = supertest(app);
 
+const blogsInDb = async () => {
+  const blogs = await Blog.find({});
+  return blogs.map((blog) => blog.toJSON());
+};
+
 beforeAll(async () => {
   await Blog.deleteMany({});
   await Blog.insertMany(blogsForTest);
@@ -49,11 +54,11 @@ describe("HTTP POST", () => {
       .expect(201)
       .expect("Content-Type", /application\/json/);
 
-    const blogsAfter = await api.get("/api/blogs");
+    const blogsAfter = await blogsInDb();
 
-    expect(blogsAfter.body).toHaveLength(blogsForTest.length + 1);
+    expect(blogsAfter).toHaveLength(blogsForTest.length + 1);
 
-    const titlesAfter = blogsAfter.body.map((blog) => blog.title);
+    const titlesAfter = blogsAfter.map((blog) => blog.title);
 
     expect(titlesAfter).toContain("Create A Fullstack Website");
   });
@@ -71,8 +76,8 @@ describe("HTTP POST", () => {
       .expect(201)
       .expect("Content-Type", /application\/json/);
 
-    const blogsAfter = await api.get("/api/blogs");
-    const newBlogInDb = blogsAfter.body[blogsAfter.body.length - 1];
+    const blogsAfter = await blogsInDb();
+    const newBlogInDb = blogsAfter[blogsAfter.length - 1];
     expect(newBlogInDb.likes).toBe(0);
   });
 
@@ -99,6 +104,36 @@ describe("HTTP POST", () => {
   });
 });
 
+describe("HTTP DELETE", () => {
+  test("a blog can be deleted", async () => {
+    const blogs = await blogsInDb();
+    const blogToDelete = blogs[0];
+
+    api.delete(`/api/blogs/${blogToDelete.id}`).expect(204);
+  });
+});
+
+describe("HTTP PUT", () => {
+  test("a blog can be updated", async () => {
+    const blogs = await blogsInDb();
+    const blogToUpdate = blogs[0];
+    const updatedLikes = blogToUpdate.likes + 1;
+    const updatedTitle = "React Patterns";
+    const blog = {
+      ...blogToUpdate,
+      title: updatedTitle,
+      likes: updatedLikes,
+    };
+    await api
+      .put(`/api/blogs/${blogToUpdate.id}`)
+      .send(blog)
+      .expect(200)
+      .then((res) => {
+        expect(res.body.likes).toBe(updatedLikes);
+        expect(res.body.title).toMatch(updatedTitle);
+      });
+  });
+});
 afterAll(async () => {
   await mongoose.connection.close();
 });
