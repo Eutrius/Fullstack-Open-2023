@@ -124,14 +124,16 @@ describe("HTTP PUT", () => {
       title: updatedTitle,
       likes: updatedLikes,
     };
-    await api
+
+    const response = await api
       .put(`/api/blogs/${blogToUpdate.id}`)
       .send(blog)
-      .expect(200)
-      .then((res) => {
-        expect(res.body.likes).toBe(updatedLikes);
-        expect(res.body.title).toMatch(updatedTitle);
-      });
+      .expect(200);
+
+    const updatedBlog = response.body;
+
+    expect(updatedBlog.likes).toBe(updatedLikes);
+    expect(updatedBlog.title).toMatch(updatedTitle);
   });
 });
 afterAll(async () => {
