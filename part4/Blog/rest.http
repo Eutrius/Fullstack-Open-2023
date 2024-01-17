@@ -1,3 +1,13 @@
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "username": "demo23",
+  "name": "demonstration",
+  "password": "dem123o",
+}
+
+###
 GET http://localhost:3003/api/blogs/1
 
 ###
@@ -6,7 +16,7 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
- "title" : "Go To Statement Considered Harmful",
+ "title" : "Go To Statement panget Harmful",
  "author": "Edsger W. Dijkstra",
  "url" : "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
  "likes" : 12
@@ -16,4 +26,7 @@ Content-Type: application/json
 ###
 
 DELETE http://localhost:3003/api/blogs/1
+
+
+###
 
