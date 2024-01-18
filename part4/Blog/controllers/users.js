@@ -12,11 +12,9 @@ usersRouter.post("/", async (request, response) => {
 
   const minLength = 3;
   if (username.length < minLength || password.length < minLength) {
-    response
-      .status(400)
-      .send({
-        error: "Both Username and Password must be at least 3 Characters long",
-      });
+    response.status(400).send({
+      error: "Both Username and Password must be at least 3 Characters long",
+    });
   } else {
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash("password", saltRounds);
