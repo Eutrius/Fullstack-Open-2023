@@ -15,6 +15,7 @@ GET http://localhost:3003/api/blogs/1
 
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: Bearer 65a92f09be62e2e29e842bb7
 
 {
  "title" : "Go To Statement panget Harmful",
