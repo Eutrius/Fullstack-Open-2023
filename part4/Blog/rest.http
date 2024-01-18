@@ -2,12 +2,13 @@ POST http://localhost:3003/api/users
 Content-Type: application/json
 
 {
-  "username": "demo23",
+  "username": "demo",
   "name": "demonstration",
-  "password": "dem123o",
+  "password": "demo"
 }
 
 ###
+
 GET http://localhost:3003/api/blogs/1
 
 ###
@@ -27,6 +28,16 @@ Content-Type: application/json
 
 DELETE http://localhost:3003/api/blogs/1
 
-
 ###
+
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+  "username": "demo",
+  "password": "demo"
+}
+
+
+
 
