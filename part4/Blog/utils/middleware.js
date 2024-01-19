@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const logger = require("./logger");
+const Blog = require("../models/blog");
 
 const requestLogger = (request, response, next) => {
   logger.info("Method:", request.method);
@@ -50,7 +51,18 @@ const userExtractor = async (request, response, next) => {
   next();
 };
 
+const blogExtractor = async (request, response, next) => {
+  const user = request.user;
+  const blog = await Blog.findById(request.params.id);
+  if (blog.user.toString() !== user.id) {
+    return response.status(401).json({ error: "Unauthorized token" });
+  }
+  request.blog = blog;
+  next();
+};
+
 module.exports = {
+  blogExtractor,
   requestLogger,
   unknownEndpoint,
   errorHandler,

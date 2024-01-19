@@ -18,6 +18,10 @@ beforeAll(async () => {
   const user = new User({ username: "demo", passwordHash });
 
   await user.save();
+  const token = await api
+    .post("/api/login")
+    .send({ username: "demo", password: "demo" });
+  console.log(token);
 });
 
 describe("User creation", () => {

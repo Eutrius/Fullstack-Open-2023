@@ -9,7 +9,18 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3003/api/blogs/1
+PUT http://localhost:3003/api/blogs/65a96429fb381d54884f2038
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRlbW8iLCJpZCI6IjY1YTk1OTgzYjdjYjAzM2JhNjUyMjNjOCIsImlhdCI6MTcwNTU5NzM3NX0.592Kgbv9b48lyXZt4yUBkx8BBdYsmtmjx9X1eq1jWQM
+
+{
+ "title" : "Go To Statement Consider Harmful",
+ "author": "Edsger W. Dijkstra",
+ "url" : "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
+ "likes" : 12
+
+}
+
 
 ###
 
@@ -27,8 +38,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRlb
 
 ###
 
-DELETE http://localhost:3003/api/blogs/65a96426fb381d54884f2030
+DELETE http://localhost:3003/api/blogs/65a96429fb381d54884f2038
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRlbW8iLCJpZCI6IjY1YTk1OTgzYjdjYjAzM2JhNjUyMjNjOCIsImlhdCI6MTcwNTU5NzM3NX0.592Kgbv9b48lyXZt4yUBkx8BBdYsmtmjx9X1eq1jWQM
+
 
 ###
 
