@@ -2,7 +2,7 @@ POST http://localhost:3003/api/users
 Content-Type: application/json
 
 {
-  "username": "demo",
+  "username": "demos",
   "name": "demonstration",
   "password": "demo"
 }
@@ -49,10 +49,14 @@ POST http://localhost:3003/api/login
 Content-Type: application/json
 
 {
-  "username": "demo",
+  "username": "demos",
   "password": "demo"
 }
 
+
+###
+
+POST http://localhost:3003/api/testing/reset
 
 
 

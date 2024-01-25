@@ -182,29 +182,11 @@ describe("HTTP DELETE", () => {
 });
 
 describe("HTTP PUT", () => {
-  test("a blog cannot be updated without a valid token", async () => {
-    const blogs = await blogsInDb();
-    const blogToUpdate = blogs[0];
-    const updatedLikes = blogToUpdate.likes + 1;
-    const updatedTitle = "React Patterns";
-    const blog = {
-      ...blogToUpdate,
-      title: updatedTitle,
-      likes: updatedLikes,
-    };
-
-    await api.put(`/api/blogs/${blogToUpdate.id}`).send(blog).expect(401);
-
-    const blogToUpdateAfter = await Blog.findById(blogToUpdate.id);
-
-    expect(blogToUpdateAfter.title).toMatch(blogToUpdate.title);
-    expect(blogToUpdateAfter.likes).toBe(blogToUpdate.likes);
-  });
   test("a blog can be updated", async () => {
     const blogs = await blogsInDb();
     const blogToUpdate = blogs[0];
     const updatedLikes = blogToUpdate.likes + 1;
-    const updatedTitle = "React Patterns";
+    const updatedTitle = "Fullstack Open";
     const blog = {
       ...blogToUpdate,
       title: updatedTitle,
@@ -213,7 +195,6 @@ describe("HTTP PUT", () => {
 
     const response = await api
       .put(`/api/blogs/${blogToUpdate.id}`)
-      .set("Authorization", token)
       .send(blog)
       .expect(200);
 
